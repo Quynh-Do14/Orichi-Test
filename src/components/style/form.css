@@ -1,0 +1,7 @@
+.rule-container .title-rule {
+    background-color: #fff;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    box-shadow: 0rem 0.0625rem 0rem 0rem #1a1a1a12;
+    border: solid 0.5px #1a1a1a12;
+}
