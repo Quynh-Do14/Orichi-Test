@@ -26,7 +26,6 @@ const InputText = (props) => {
             validateFields(isImplicitChange, attribute, !value, setValidate, validate, !value ? `Vui lòng nhập ${label}` : "");
         }
     };
-    console.log('validate', validate);
 
     useEffect(() => {
         if (submittedTime != null) {

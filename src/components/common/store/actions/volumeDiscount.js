@@ -1,8 +1,8 @@
 import * as types from '../../reducer'
 
-export const volumeDicount = data => {
+export const volumeDiscount = data => {
     return {
         type: types.VOLUMEDISCOUNT,
-        favorite: data,
+        data: data,
     };
 };

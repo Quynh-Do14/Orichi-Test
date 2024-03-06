@@ -20,7 +20,11 @@ code {
   justify-content: space-between;
 }
 
-.rule-container .option-style {
+.justify-content-start {
+  justify-content: start;
+}
+
+.rule-container .option-header .option-style {
   background-color: #e51c00;
   border-bottom-right-radius: 8px;
   padding: 5px 30px 5px 5px;
@@ -32,4 +36,14 @@ code {
 
 .style-validate {
   color: #e51c00;
+}
+
+.Polaris-Header-Title__TitleWrapper {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.option-header .Polaris-Button--textAlignCenter {
+  background: #fff !important;
+  box-shadow: none;
 }

@@ -7,16 +7,18 @@ import InputDiscountRule from '../../common/input-discount-rule';
 import {
     DeleteIcon
 } from '@shopify/polaris-icons';
+import SelectDiscountType from '../../common/select-discount-type';
 const VolumeDiscountRule = (props) => {
     const { setDataVolume, validate, setValidate, submittedTime } = props;
+    const [selectedOption, setSelectedOption] = useState('');
     const [optionArr, setOptionArr] = useState([
         {
             title: "",
             subTitle: "",
             label: "",
             quantity: 1,
+            discountType: "",
             amount: "",
-
         }
     ]);
     const onAddOption = () => {
@@ -27,17 +29,17 @@ const VolumeDiscountRule = (props) => {
                 subTitle: "",
                 label: "",
                 quantity: Number(Number(optionArr[optionArr.length - 1].quantity) + 1),
+                discountType: "",
                 amount: "",
 
             }
         ])
 
     }
-    const [selectedOption, setSelectedOption] = useState('');
 
-    const handleSelectChange = (value) => {
-        setSelectedOption(value);
-    };
+    // const handleSelectChange = (value) => {
+    //     setSelectedOption(value);
+    // };
     const onDeleteOption = (index) => {
         const spliceOption = [...optionArr];
         spliceOption.splice(index, 1)
@@ -53,7 +55,7 @@ const VolumeDiscountRule = (props) => {
                     Volume Discount Rule
                 </Text>
             </div> */}
-            <Card roundedAbove="lg" padding={"600"}>
+            <Card roundedAbove="sm" padding={"600"}>
                 <Text variant="headingMd" alignment='start' fontWeight='bold' as="h2">
                     Volume Discount Rule
                 </Text>
@@ -64,7 +66,7 @@ const VolumeDiscountRule = (props) => {
                             return (
                                 <div >
                                     <Divider borderColor="border" borderWidth='050' />
-                                    <div className='d-flex justify-content-between'>
+                                    <div className='d-flex justify-content-between option-header'>
                                         <div className='option-style'>
                                             <h2 className='option-title'>Option {index + 1}</h2>
                                         </div>
@@ -78,7 +80,7 @@ const VolumeDiscountRule = (props) => {
                                             />
                                         </Button>
                                     </div>
-
+                                    <br />
 
                                     <InlineGrid key={index} gap="400" columns={3}>
                                         <InputDiscountRule
@@ -86,8 +88,8 @@ const VolumeDiscountRule = (props) => {
                                             label={"Title"}
                                             attribute={"title"}
                                             index={index}
-                                            setOptionArr={setOptionArr}
                                             optionArr={optionArr}
+                                            setOptionArr={setOptionArr}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
@@ -99,6 +101,7 @@ const VolumeDiscountRule = (props) => {
                                             label={"subTitle"}
                                             attribute={"subTitle"}
                                             index={index}
+                                            optionArr={optionArr}
                                             setOptionArr={setOptionArr}
                                             validate={validate}
                                             setValidate={setValidate}
@@ -111,6 +114,7 @@ const VolumeDiscountRule = (props) => {
                                             label={"Label"}
                                             attribute={"label"}
                                             index={index}
+                                            optionArr={optionArr}
                                             setOptionArr={setOptionArr}
                                             validate={validate}
                                             setValidate={setValidate}
@@ -122,45 +126,35 @@ const VolumeDiscountRule = (props) => {
                                             label={"Quantity"}
                                             attribute={"quantity"}
                                             index={index}
+                                            optionArr={optionArr}
                                             setOptionArr={setOptionArr}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
                                             isRequired={true}
                                             // handleChildInputChange={handleChildInputChange}
-                                            optionArr={optionArr}
                                             type={"number"}
                                         />
-                                        {/* <InputDiscountRule
-                                            attributeValue={it.discountType}
+                                        <SelectDiscountType
                                             label={"DiscountType"}
                                             attribute={"discountType"}
                                             index={index}
+                                            optionArr={optionArr}
                                             setOptionArr={setOptionArr}
+                                            setSelectedOption={setSelectedOption}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
-                                            // handleChildInputChange={handleChildInputChange}
-                                            type={"number"}
-                                        /> */}
-                                        <Select
-                                            label="DiscountType"
-                                            options={[
-                                                { label: 'None', value: '' },
-                                                { label: '% discount', value: '%discount' },
-                                                { label: 'Discount / each', value: 'Discount/each' },
-                                            ]}
-                                            value={selectedOption}
-                                            onChange={handleSelectChange}
                                         />
                                         {
-                                            selectedOption !== ""
+                                            it.discountType !== ""
                                             &&
                                             <InputDiscountRule
                                                 attributeValue={it.discountType}
                                                 label={"Amount"}
                                                 attribute={"amount"}
                                                 index={index}
+                                                optionArr={optionArr}
                                                 setOptionArr={setOptionArr}
                                                 validate={validate}
                                                 setValidate={setValidate}
@@ -168,7 +162,7 @@ const VolumeDiscountRule = (props) => {
                                                 // handleChildInputChange={handleChildInputChange}
                                                 type={"number"}
                                                 isRequired={true}
-                                                icon={selectedOption == "%discount" ? < Text >%</Text> : < Text >$</Text>}
+                                                icon={it.discountType == "%discount" ? < Text >%</Text> : < Text >$</Text>}
                                             />
                                         }
 
@@ -178,7 +172,7 @@ const VolumeDiscountRule = (props) => {
                             )
                         })
                     }
-
+                    <br />
                     <Divider borderColor="border" borderWidth='050' />
                     <br />
                 </BlockStack>

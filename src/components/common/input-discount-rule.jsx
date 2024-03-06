@@ -1,6 +1,8 @@
 import { TextField } from '@shopify/polaris'
 import React, { useState, useCallback, useEffect } from 'react'
 import { validateFields } from '../utils/helper';
+import { useDispatch } from 'react-redux';
+import { volumeDiscount } from './store/actions/volumeDiscount';
 
 const InputDiscountRule = (props) => {
     const {
@@ -15,16 +17,30 @@ const InputDiscountRule = (props) => {
         setValidate,
         submittedTime,
         isRequired = false,
-        icon
+        icon,
     } = props;
     const [value, setValue] = useState("");
+
+    const dispatch = useDispatch();
 
     const onChange = (e) => {
         setValue(e || "");
         setOptionArr(prev => {
             prev[index] = {
                 ...prev[index],
-                [attribute]: e || '',
+                [attribute]: type == "number" ? Number(e) : e,
+            }
+            return prev;
+        });
+        dispatch(
+            volumeDiscount({
+                data: optionArr
+            })
+        )
+        setOptionArr(prev => {
+            prev[index] = {
+                ...prev[index],
+                [attribute]: type == "number" ? Number(e) : e,
             }
             return prev;
         });
@@ -36,7 +52,6 @@ const InputDiscountRule = (props) => {
             validateFields(isImplicitChange, `${attribute}${index}`, !value, setValidate, validate, !value ? `Vui lòng nhập ${label}` : "");
         }
     };
-    console.log('validate', validate);
 
     useEffect(() => {
         if (submittedTime != null) {

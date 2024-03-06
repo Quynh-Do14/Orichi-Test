@@ -5,16 +5,23 @@ import {
     useIndexResourceState,
     Text,
     Badge,
+    Card,
 } from '@shopify/polaris';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 
 const Preview = (props) => {
     const { dataPreview = [] } = props;
+    const selector = useSelector(
+        data => data,
+    );
+
     const resourceName = {
         singular: 'order',
         plural: 'orders',
     };
-    const rowMarkup = dataPreview?.map((it, index,) => (
+    const rowMarkup = dataPreview && dataPreview?.map((it, index,) => (
         <IndexTable.Row
             id={index}
             key={index}
@@ -33,10 +40,22 @@ const Preview = (props) => {
     );
 
     return (
-        <LegacyCard>
+        <Card roundedAbove="sm" padding={"600"}>
+            <Text variant="headingMd" alignment='start' fontWeight='bold' as="h2">
+                General
+            </Text>
+            <br />
+            <Text variant="headingMd" alignment='center' fontWeight='bold' as="h2">
+                Buy more and save
+            </Text>
+            <br />
+            <Text variant="headingMd" alignment='start' fontWeight='bold' as="h2">
+                Apply for all product in store
+            </Text>
+            <br />
             <IndexTable
                 resourceName={resourceName}
-                itemCount={dataPreview.length}
+                itemCount={dataPreview && dataPreview?.length}
                 headings={[
                     { title: 'Title' },
                     { title: 'Discount Type' },
@@ -46,7 +65,7 @@ const Preview = (props) => {
             >
                 {rowMarkup}
             </IndexTable>
-        </LegacyCard>
+        </Card>
     );
 }
 export default Preview
